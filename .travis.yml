@@ -4,6 +4,7 @@ rvm:
 
 script:
   - bundle exec rubocop
+  - bundle exec cucumber
 
 notifications:
   email:

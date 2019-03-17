@@ -7,12 +7,17 @@ AllCops:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/BlockLength:
+  Max: 30
+
 Metrics/LineLength:
   Max: 100
   Exclude:
     - config/routes.rb
     - db/seeds.rb
+    - features/support/env.rb
     - Gemfile
+    - lib/tasks/cucumber.rake
 
 Rails/FilePath:
   Exclude:

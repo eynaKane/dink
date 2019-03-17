@@ -58,7 +58,9 @@ group :test do
 
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-  gem 'cucumber-rails'
+
+  # Rails Generators for Cucumber with special support for Capybara and DatabaseCleaner
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'selenium-webdriver'
 end
