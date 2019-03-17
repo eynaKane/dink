@@ -23,6 +23,10 @@ Rails/FilePath:
   Exclude:
     - lib/tasks/cucumber.rake
 
+Style/BlockComments:
+  Exclude:
+    - spec/spec_helper.rb
+
 Style/Copyright:
   Enabled: false
 

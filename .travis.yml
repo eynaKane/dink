@@ -7,8 +7,9 @@ services:
 
 script:
   - bin/setup
-  - bundle exec rubocop
   - bundle exec cucumber
+  - bundle exec rspec
+  - bundle exec rubocop
 
 notifications:
   email:
