@@ -62,6 +62,7 @@ group :test do
   # Rails Generators for Cucumber with special support for Capybara and DatabaseCleaner
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'rspec-rails'
   gem 'selenium-webdriver'
 end
 
