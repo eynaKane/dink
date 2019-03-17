@@ -2,15 +2,12 @@ language: ruby
 rvm:
  - 2.5.4
 
-rubocop:
-  script:
-    - bundle exec rubocop
+services:
+  - postgresql
 
-cucumber:
-  services:
-    - postgresql
-  script:
+script:
   - bin/setup
+  - bundle exec rubocop
   - bundle exec cucumber
 
 notifications:
