@@ -6,6 +6,7 @@
 
 require 'cucumber/rails'
 require 'rspec/rails'
+require 'capybara-screenshot/cucumber'
 
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
@@ -58,9 +59,14 @@ end
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
 if ENV['USE_CHROME']
-  # use the chrome driver
   Capybara.default_driver = :selenium
   Capybara.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: :chrome)
   end
 end
+
+# Keep only the screenshots generated from the last failing test suite
+Capybara::Screenshot.prune_strategy = :keep_last_run
+
+# Keep up to the number of screenshots specified in the hash
+Capybara::Screenshot.prune_strategy = { keep: 2 }
