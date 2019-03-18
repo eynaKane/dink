@@ -16,16 +16,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create user' do
-    User.all.delete_all
+    password = Faker::Internet.password
 
     assert_difference('User.count') do
       post users_url, params: {
         user: {
-          email: @user.email,
-          first_name: @user.first_name,
-          last_name: @user.last_name,
-          password_digest: @user.password_digest,
-          username: @user.username
+          first_name: Faker::Name.first_name,
+          last_name: Faker::Name.last_name,
+          username: Faker::Internet.user_name ,
+          email: Faker::Internet.email,
+          password: password,
+          password_confirmation: password
         }
       }
     end
@@ -44,15 +45,19 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update user' do
+    password = Faker::Internet.password
+
     patch user_url(@user), params: {
       user: {
-        email: @user.email,
         first_name: @user.first_name,
         last_name: @user.last_name,
-        password_digest: @user.password_digest,
-        username: @user.username
+        username: @user.username,
+        email: @user.email,
+        password: password,
+        password_confirmation: password
       }
     }
+
     assert_redirected_to user_url(@user)
   end
 
