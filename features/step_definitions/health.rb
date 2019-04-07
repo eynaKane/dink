@@ -1,5 +1,5 @@
-Given('I am on the health page') do
-  visit '/health'
+Given('I am on {string} page') do |string|
+  visit "/#{string}"
 end
 
 Then('I should see {string}') do |string|
