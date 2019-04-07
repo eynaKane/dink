@@ -40,17 +40,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.try(:authenticate, old_password) 
-        if @user.update(update_user_params)
-          format.html { redirect_to @user, notice: 'User was successfully updated.' }
-          format.json { render :show, status: :ok, location: @user }
-        else
-          format.html { redirect_to edit_user_path(@user), alert: 'User was not updated!' }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
+      if @user.try(:authenticate, old_password) && @user.update(update_user_params)
+        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: @user }
       else
         format.html { redirect_to edit_user_path(@user), alert: 'User was not updated!' }
-        @user.errors.add(:old_password, 'invalid')
+        @user.errors.add(:old_password, 'invalid') unless @user.try(:authenticate, old_password)
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
