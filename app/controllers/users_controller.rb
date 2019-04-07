@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_user, only: %i[show edit update destroy]
 
   # GET /users
@@ -39,11 +40,17 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+      if @user.try(:authenticate, old_password) 
+        if @user.update(update_user_params)
+          format.html { redirect_to @user, notice: 'User was successfully updated.' }
+          format.json { render :show, status: :ok, location: @user }
+        else
+          format.html { redirect_to edit_user_path(@user), alert: 'User was not updated!' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_user_path(@user), alert: 'User was not updated!' }
+        @user.errors.add(:old_password, 'invalid')
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -76,5 +83,18 @@ class UsersController < ApplicationController
       :password,
       :password_confirmation
     )
+  end
+
+  def update_user_params
+    params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :password,
+      :password_confirmation
+    )
+  end
+
+  def old_password
+    params['user']['old_password']
   end
 end

@@ -51,8 +51,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       user: {
         first_name: @user.first_name,
         last_name: @user.last_name,
-        username: @user.username,
-        email: @user.email,
+        old_password: 'Password',
         password: password,
         password_confirmation: password
       }
